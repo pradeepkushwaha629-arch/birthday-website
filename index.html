@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0612">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Happy Birthday — A Special Surprise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="intro-active">
+
+  <!-- Canvas Layers -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+  <canvas id="effects-canvas" aria-hidden="true"></canvas>
+  <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+  <!-- Cursor Effects -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+  </div>
+  <div id="cursor-sparkle" aria-hidden="true"></div>
+  <div id="mouse-trail" aria-hidden="true"></div>
+
+  <!-- Light Rays -->
+  <div class="light-rays" aria-hidden="true"></div>
+
+  <!-- Parallax Background -->
+  <div class="parallax-bg" aria-hidden="true">
+    <div class="parallax-layer layer-1"></div>
+    <div class="parallax-layer layer-2"></div>
+    <div class="parallax-layer layer-3"></div>
+    <div class="parallax-layer layer-4"></div>
+  </div>
+
+  <!-- Screen Flash -->
+  <div id="screen-flash" aria-hidden="true"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true">
+    <div id="scroll-progress-fill" class="scroll-progress-fill"></div>
+  </div>
+
+  <!-- Aurora Overlay -->
+  <div class="aurora-bg" aria-hidden="true"></div>
+
+  <!-- Film Grain -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Floating Orbs -->
+  <div id="floating-orbs" class="floating-orbs" aria-hidden="true"></div>
+
+  <!-- ==================== INTRO SCREEN ==================== -->
+  <section id="intro-screen" class="screen active">
+    <div class="intro-cinematic-bg" aria-hidden="true"></div>
+    <div class="intro-mesh" aria-hidden="true"></div>
+    <canvas id="intro-sparkle-canvas" aria-hidden="true"></canvas>
+    <div class="intro-spotlight" id="intro-spotlight" aria-hidden="true"></div>
+    <div class="intro-vignette"></div>
+    <div class="intro-letterbox intro-letterbox-top" aria-hidden="true"></div>
+    <div class="intro-letterbox intro-letterbox-bottom" aria-hidden="true"></div>
+    <div class="intro-hearts" id="intro-hearts" aria-hidden="true"></div>
+
+    <!-- Interior (behind the gate) -->
+    <div id="gate-interior" class="gate-interior">
+      <div class="intro-content intro-animate">
+        <div class="intro-badge interior-badge">
+          <span class="badge-line"></span>
+          <span class="badge-text">Welcome Inside</span>
+          <span class="badge-line"></span>
+        </div>
+
+        <div class="gift-stage" id="gift-stage">
+          <div class="gift-pedestal" aria-hidden="true">
+            <div class="pedestal-top"></div>
+            <div class="pedestal-glow"></div>
+          </div>
+          <div class="gift-light-ring ring-1" aria-hidden="true"></div>
+          <div class="gift-light-ring ring-2" aria-hidden="true"></div>
+          <div class="gift-light-ring ring-3" aria-hidden="true"></div>
+          <div class="gift-crown" aria-hidden="true">👑</div>
+          <div class="gift-sparkle-orbit" id="gift-sparkle-orbit" aria-hidden="true"></div>
+
+          <div class="gift-scene" id="gift-scene">
+            <div class="gift-box-3d" id="gift-box">
+              <div class="gift-shadow"></div>
+              <div class="gift-reflection"></div>
+              <div class="gift-body">
+                <div class="gift-face gift-front"></div>
+                <div class="gift-face gift-back"></div>
+                <div class="gift-face gift-left"></div>
+                <div class="gift-face gift-right"></div>
+                <div class="gift-face gift-bottom"></div>
+                <div class="gift-lid" id="gift-lid">
+                  <div class="lid-face lid-top"></div>
+                  <div class="lid-face lid-front"></div>
+                  <div class="lid-face lid-back"></div>
+                  <div class="lid-face lid-left"></div>
+                  <div class="lid-face lid-right"></div>
+                </div>
+                <div class="gift-ribbon-v" id="ribbon-v"></div>
+                <div class="gift-ribbon-h" id="ribbon-h"></div>
+                <div class="gift-bow" id="gift-bow">
+                  <div class="bow-loop bow-left"></div>
+                  <div class="bow-loop bow-right"></div>
+                  <div class="bow-knot"></div>
+                  <div class="bow-tail bow-tail-left"></div>
+                  <div class="bow-tail bow-tail-right"></div>
+                </div>
+              </div>
+              <div class="gift-glow"></div>
+              <div class="gift-glow gift-glow-2"></div>
+              <div class="gift-light-burst" id="gift-light-burst"></div>
+              <div class="gift-smoke" id="gift-smoke"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="intro-message-block">
+          <p class="intro-message" id="intro-message"></p>
+          <p class="intro-for">For <span class="intro-name">Ankita (Pulu)</span></p>
+        </div>
+
+        <button class="premium-btn intro-btn" id="open-surprise-btn" type="button">
+          <span class="btn-border-glow"></span>
+          <span class="btn-glow"></span>
+          <span class="btn-text">Click to Open Your Surprise</span>
+          <span class="btn-sparkle">✦</span>
+        </button>
+
+        <div class="scroll-hint" aria-hidden="true">
+          <span class="scroll-hint-text">Tap the gift or button</span>
+          <span class="scroll-hint-arrow">↓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium Gate Layer -->
+    <div id="gate-layer" class="gate-layer">
+      <div class="gate-scene">
+        <div class="gate-arch-frame" aria-hidden="true">
+          <div class="arch-top"></div>
+          <div class="arch-pillar arch-pillar-left"></div>
+          <div class="arch-pillar arch-pillar-right"></div>
+          <div class="arch-keystone">✦</div>
+        </div>
+
+        <div class="gate-doors-wrap">
+          <div class="gate-light-through" id="gate-light-through" aria-hidden="true"></div>
+          <div class="gate-door gate-door-left" id="gate-door-left">
+            <div class="door-face door-front">
+              <div class="door-pattern"></div>
+              <div class="door-panel door-panel-top"></div>
+              <div class="door-panel door-panel-bottom"></div>
+              <div class="door-carving">❋</div>
+            </div>
+            <div class="door-face door-back"></div>
+            <div class="door-handle door-handle-left"></div>
+          </div>
+          <div class="gate-door gate-door-right" id="gate-door-right">
+            <div class="door-face door-front">
+              <div class="door-pattern"></div>
+              <div class="door-panel door-panel-top"></div>
+              <div class="door-panel door-panel-bottom"></div>
+              <div class="door-carving">❋</div>
+            </div>
+            <div class="door-face door-back"></div>
+            <div class="door-handle door-handle-right"></div>
+          </div>
+        </div>
+
+        <div class="gate-steps" aria-hidden="true"></div>
+      </div>
+
+      <div class="gate-ui">
+        <div class="intro-badge gate-badge">
+          <span class="badge-line"></span>
+          <span class="badge-text">A Birthday Surprise</span>
+          <span class="badge-line"></span>
+        </div>
+        <p class="gate-subtitle">Something magical awaits you</p>
+        <p class="gate-for-name">For <span class="intro-name">Ankita (Pulu)</span></p>
+
+        <button class="premium-btn gate-door-btn" id="open-door-btn" type="button">
+          <span class="btn-border-glow"></span>
+          <span class="btn-glow"></span>
+          <span class="btn-text">Open the Door</span>
+          <span class="btn-sparkle">🚪</span>
+        </button>
+
+        <p class="gate-tap-hint">One tap — door opens & you enter ✦</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN EXPERIENCE ==================== -->
+  <main id="main-experience" class="hidden">
+
+    <!-- Birthday Hero -->
+    <section id="birthday-hero" class="section hero-section">
+      <div class="hero-halo" aria-hidden="true"></div>
+      <div class="hero-smoke" aria-hidden="true"></div>
+      <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+      <div class="name-sparkle-ring" id="name-sparkle-ring" aria-hidden="true"></div>
+      <div class="birthday-title-wrap">
+        <div class="birthday-emoji left-emoji">🎉</div>
+        <h1 class="birthday-title" id="birthday-title" aria-label="Happy Birthday"></h1>
+        <div class="birthday-emoji right-emoji">🎉</div>
+      </div>
+      <p class="dearest-label reveal-item" data-delay="0">My Dearest Best Friend</p>
+      <h2 class="friend-name reveal-item" id="friend-name" data-delay="200"></h2>
+      <div class="hero-scroll-cue" aria-hidden="true">
+        <span>Scroll for more magic</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <div class="section-divider reveal-on-scroll" aria-hidden="true"><span>✦</span></div>
+
+    <!-- Photo Gallery -->
+    <section id="gallery" class="section gallery-section">
+      <h2 class="section-title reveal-on-scroll">Our Beautiful Memories</h2>
+      <p class="section-subtitle reveal-on-scroll">Every moment with you is a treasure</p>
+      <p class="gallery-swipe-hint reveal-on-scroll">← Swipe to see more memories →</p>
+      <div class="gallery-grid" id="gallery-grid">
+        <div class="photo-card reveal-on-scroll" data-index="0">
+          <div class="photo-card-inner">
+            <img src="images/photo1.png" alt="Ankita at the mall" loading="lazy">
+            <div class="photo-overlay"><span>✨ Mall Day</span></div>
+            <div class="photo-shine"></div>
+            <div class="photo-reflection"></div>
+          </div>
+        </div>
+        <div class="photo-card reveal-on-scroll" data-index="1">
+          <div class="photo-card-inner">
+            <img src="images/photo2.png" alt="Ankita with her scooter" loading="lazy">
+            <div class="photo-overlay"><span>🛵 Ride Day</span></div>
+            <div class="photo-shine"></div>
+            <div class="photo-reflection"></div>
+          </div>
+        </div>
+        <div class="photo-card reveal-on-scroll" data-index="2">
+          <div class="photo-card-inner">
+            <img src="images/photo3.png" alt="Ankita smiling outdoors" loading="lazy">
+            <div class="photo-overlay"><span>😊 Happy Moment</span></div>
+            <div class="photo-shine"></div>
+            <div class="photo-reflection"></div>
+          </div>
+        </div>
+        <div class="photo-card reveal-on-scroll" data-index="3">
+          <div class="photo-card-inner">
+            <img src="images/photo4.png" alt="Ankita beautiful selfie" loading="lazy">
+            <div class="photo-overlay"><span>🌸 Pretty You</span></div>
+            <div class="photo-shine"></div>
+            <div class="photo-reflection"></div>
+          </div>
+        </div>
+        <div class="photo-card reveal-on-scroll" data-index="4">
+          <div class="photo-card-inner">
+            <img src="images/photo5.png" alt="Ankita by the river" loading="lazy">
+            <div class="photo-overlay"><span>🌊 Adventure</span></div>
+            <div class="photo-shine"></div>
+            <div class="photo-reflection"></div>
+          </div>
+        </div>
+        <div class="photo-card reveal-on-scroll" data-index="5">
+          <div class="photo-card-inner">
+            <img src="images/photo6.png" alt="Ankita life is beautiful" loading="lazy">
+            <div class="photo-overlay"><span>❤️ Life is Beautiful</span></div>
+            <div class="photo-shine"></div>
+            <div class="photo-reflection"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fullscreen Photo Modal -->
+    <div id="photo-modal" class="photo-modal hidden" role="dialog" aria-modal="true" aria-label="Photo fullscreen view">
+      <button class="modal-nav modal-prev" id="modal-prev" type="button" aria-label="Previous photo">‹</button>
+      <button class="modal-close" id="modal-close" type="button" aria-label="Close">&times;</button>
+      <button class="modal-nav modal-next" id="modal-next" type="button" aria-label="Next photo">›</button>
+      <img id="modal-img" src="" alt="Fullscreen memory">
+      <p class="modal-counter" id="modal-counter"></p>
+    </div>
+
+    <div class="section-divider reveal-on-scroll" aria-hidden="true"><span>✦</span></div>
+
+    <!-- Memories Timeline -->
+    <section id="memories" class="section timeline-section">
+      <h2 class="section-title reveal-on-scroll">Our Journey Together</h2>
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+        <div class="timeline-card reveal-on-scroll from-left" data-delay="0">
+          <div class="timeline-icon">✨</div>
+          <h3>Our First Meet</h3>
+          <p>The day our story began — a moment that changed everything forever.</p>
+        </div>
+        <div class="timeline-card reveal-on-scroll from-right" data-delay="150">
+          <div class="timeline-icon">😂</div>
+          <h3>Crazy Moments</h3>
+          <p>All the laughs, the chaos, and the adventures that made us unstoppable.</p>
+        </div>
+        <div class="timeline-card reveal-on-scroll from-bottom" data-delay="300">
+          <div class="timeline-icon">📷</div>
+          <h3>Best Memories</h3>
+          <p>Captured in time — every snapshot holds a piece of our beautiful friendship.</p>
+        </div>
+        <div class="timeline-card reveal-on-scroll from-left" data-delay="450">
+          <div class="timeline-icon">❤️</div>
+          <h3>Forever Friends</h3>
+          <p>No matter what life brings, you will always have a place in my heart.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider reveal-on-scroll" aria-hidden="true"><span>✦</span></div>
+
+    <!-- Emotional Letter -->
+    <section id="letter" class="section letter-section">
+      <h2 class="section-title reveal-on-scroll">A Letter From My Heart</h2>
+      <div class="letter-container reveal-on-scroll">
+        <div class="letter-paper">
+          <div class="letter-seal">❤️</div>
+          <div class="letter-content" id="letter-content"></div>
+          <div class="letter-cursor" id="letter-cursor">|</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider reveal-on-scroll" aria-hidden="true"><span>✦</span></div>
+
+    <!-- Life / Birthday Counter -->
+    <section id="counter" class="section counter-section">
+      <h2 class="section-title reveal-on-scroll">Your Beautiful Journey</h2>
+      <p class="section-subtitle reveal-on-scroll">Date of Birth · 26 · 06 · 1999</p>
+      <p class="counter-live-badge hidden" id="counter-live-badge">🎂 Birthday Live — 12 PM to 27th 12 AM</p>
+      <div class="counter-display reveal-on-scroll">
+        <div class="counter-block">
+          <span class="counter-value" id="counter-days">0</span>
+          <span class="counter-label">Days</span>
+        </div>
+        <div class="counter-separator">:</div>
+        <div class="counter-block">
+          <span class="counter-value" id="counter-hours">00</span>
+          <span class="counter-label">Hours</span>
+        </div>
+        <div class="counter-separator">:</div>
+        <div class="counter-block">
+          <span class="counter-value" id="counter-minutes">00</span>
+          <span class="counter-label">Minutes</span>
+        </div>
+        <div class="counter-separator">:</div>
+        <div class="counter-block">
+          <span class="counter-value" id="counter-seconds">00</span>
+          <span class="counter-label">Seconds</span>
+        </div>
+      </div>
+      <p class="counter-since reveal-on-scroll" id="counter-since"></p>
+    </section>
+
+    <!-- Surprise Button -->
+    <section id="surprise" class="section surprise-section">
+      <button class="premium-btn surprise-btn reveal-on-scroll" id="one-more-surprise" type="button">
+        <span class="btn-glow"></span>
+        <span class="btn-text">One More Surprise</span>
+      </button>
+      <p class="final-message hidden" id="final-message">I'll Always Be There For You ❤️</p>
+    </section>
+
+    <!-- Ending -->
+    <footer id="ending" class="section ending-section">
+      <p class="ending-text">Made with ❤️ Especially For You</p>
+      <div class="ending-hearts" aria-hidden="true"></div>
+    </footer>
+  </main>
+
+  <!-- Mobile Section Navigation -->
+  <nav id="section-nav" class="section-nav hidden" aria-label="Section navigation">
+    <a href="#birthday-hero" class="nav-dot active" data-section="birthday-hero" aria-label="Birthday"></a>
+    <a href="#gallery" class="nav-dot" data-section="gallery" aria-label="Photos"></a>
+    <a href="#memories" class="nav-dot" data-section="memories" aria-label="Memories"></a>
+    <a href="#letter" class="nav-dot" data-section="letter" aria-label="Letter"></a>
+    <a href="#counter" class="nav-dot" data-section="counter" aria-label="Counter"></a>
+    <a href="#surprise" class="nav-dot" data-section="surprise" aria-label="Surprise"></a>
+  </nav>
+
+  <!-- Back to Top -->
+  <button id="back-to-top" class="back-to-top hidden" type="button" aria-label="Back to top">↑</button>
+
+  <!-- Floating Elements Container -->
+  <div id="floating-elements" aria-hidden="true"></div>
+  <div id="balloons-container" aria-hidden="true"></div>
+  <div id="butterflies-container" aria-hidden="true"></div>
+
+  <!-- Music Player -->
+  <div id="music-player" class="music-player hidden">
+    <button class="music-collapse" id="music-collapse" type="button" aria-label="Toggle music player">♪</button>
+    <button class="music-toggle" id="music-toggle" type="button" aria-label="Play or pause music">
+      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="icon-pause hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <div class="music-info">
+      <span class="music-title">Birthday Song</span>
+      <div class="music-progress-wrap">
+        <div class="music-progress-bar" id="music-progress-bar">
+          <div class="music-progress-fill" id="music-progress-fill"></div>
+        </div>
+        <span class="music-time" id="music-time">0:00</span>
+      </div>
+      <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="70" aria-label="Volume">
+    </div>
+  </div>
+
+  <audio id="birthday-audio" src="audio/birthday.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
